@@ -130,3 +130,7 @@
 | Figma | 採用 | コードを書き始める前に画面設計（ワイヤーフレーム）を作成し、操作感のヒアリング・検証を行うため |
 | RSpec | 採用 | 金額や日付といった大切な経理・案件データを扱うため、データ処理の正確性を自動テストで担保するため |
 | React | 不採用（本リリースで検討） | まずはRails×TypeScriptのMVPで完成を優先するため |
+
+
+## 11. 画面遷移図
+Figma：https://www.figma.com/design/gnYFcpVy2COqruUpNEQ8Zf/interpreter-support_app_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=1-105&t=KeJ61PmGcBdZ0PiA-1
