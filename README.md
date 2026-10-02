@@ -147,6 +147,7 @@ erDiagram
         bigint id PK "ID"
         string email "メールアドレス"
         string crypted_password "パスワード"
+        string salt "パスワード暗号化用ソルト"
         string name "氏名"
         string business_name "屋号・事業所名"
         text bank_details "振込先口座情報"
@@ -161,6 +162,9 @@ erDiagram
         string client_name "クライアント名"
         date event_date "稼働日"
         integer reward_amount "報酬金額"
+        date issued_date "発行日"
+        date payment_deadline "支払期限"
+        text billing_bank_details "発行時振込先情報"
         integer status "ステータス（0:見積, 1:請求済, 2:入金済）"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
@@ -172,10 +176,19 @@ erDiagram
         string title "品名・内容"
         integer amount "金額"
         date issued_date "日付"
-        string account_item "勘定科目（旅費交通費など）"
-        string receipt_image "領収書画像パッチ"
+        string account_item "勘定科目"
         text memo "メモ"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
 ```
+
+### 補足：テーブル制約・データ保護仕様
+- **Active Storageの使用:** 領収書画像はActive Storage（AWS S3）で管理するため、専用テーブル（`active_storage_attachments`等）はER図から省略しています。
+- **データ制約:**
+  - `users.email`: `NOT NULL`, `UNIQUE`
+  - `users.crypted_password`, `users.salt`: `NOT NULL`
+  - `projects.user_id`, `projects.title`: `NOT NULL`, 外部キー制約（`users.id`）
+  - `receipts.project_id`: `NOT NULL`, 外部キー制約（`projects.id`）
+- **案件削除時の挙動（⑤への対応）:**
+  - 経費データの意図しない消失を防ぐため、領収書が紐づいている案件は削除できない仕様とします（`dependent: :restrict_with_error`）。
