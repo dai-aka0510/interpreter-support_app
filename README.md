@@ -138,6 +138,8 @@ Figma：https://www.figma.com/design/gnYFcpVy2COqruUpNEQ8Zf/interpreter-support_
 
 ```mermaid
 erDiagram
+    direction LR
+
     users ||--o{ projects : "1人のユーザーは複数の案件を持つ"
     projects ||--o{ receipts : "1つの案件は複数の領収書を持つ"
 
