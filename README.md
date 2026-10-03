@@ -131,6 +131,64 @@
 | RSpec | 採用 | 金額や日付といった大切な経理・案件データを扱うため、データ処理の正確性を自動テストで担保するため |
 | React | 不採用（本リリースで検討） | まずはRails×TypeScriptのMVPで完成を優先するため |
 
-
 ## 11. 画面遷移図
 Figma：https://www.figma.com/design/gnYFcpVy2COqruUpNEQ8Zf/interpreter-support_app_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=1-105&t=KeJ61PmGcBdZ0PiA-1
+
+## 12. ER図
+
+```mermaid
+erDiagram
+    direction LR
+
+    users ||--o{ projects : "1人のユーザーは複数の案件を持つ"
+    projects ||--o{ receipts : "1つの案件は複数の領収書を持つ"
+
+    users {
+        bigint id PK "ID"
+        string email "メールアドレス"
+        string crypted_password "パスワード"
+        string salt "パスワード暗号化用ソルト"
+        string name "氏名"
+        string business_name "屋号・事業所名"
+        text bank_details "振込先口座情報"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    projects {
+        bigint id PK "ID"
+        bigint user_id FK "ユーザーID"
+        string title "案件名"
+        string client_name "クライアント名"
+        date event_date "稼働日"
+        integer reward_amount "報酬金額"
+        date issued_date "発行日"
+        date payment_deadline "支払期限"
+        text billing_bank_details "発行時振込先情報"
+        integer status "ステータス（0:見積, 1:請求済, 2:入金済）"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    receipts {
+        bigint id PK "ID"
+        bigint project_id FK "案件ID"
+        string title "品名・内容"
+        integer amount "金額"
+        date issued_date "日付"
+        string account_item "勘定科目"
+        text memo "メモ"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+```
+
+### 補足：テーブル制約・データ保護仕様
+- **Active Storageの使用:** 領収書画像はActive Storage（AWS S3）で管理するため、専用テーブル（`active_storage_attachments`等）はER図から省略しています。
+- **データ制約:**
+  - `users.email`: `NOT NULL`, `UNIQUE`
+  - `users.crypted_password`, `users.salt`: `NOT NULL`
+  - `projects.user_id`, `projects.title`: `NOT NULL`, 外部キー制約（`users.id`）
+  - `receipts.project_id`: `NOT NULL`, 外部キー制約（`projects.id`）
+- **案件削除時の挙動（⑤への対応）:**
+  - 経費データの意図しない消失を防ぐため、領収書が紐づいている案件は削除できない仕様とします（`dependent: :restrict_with_error`）。
