@@ -16,7 +16,7 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager --no-exit-on-warn
+        run: bin/brakeman --no-pager --no-error-on-warning
 
   scan_js:
     runs-on: ubuntu-latest
@@ -68,6 +68,6 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
       - name: Set up database
-        run: bin/rails db:test:prepare
+        run: bin/rails db:prepare
       - name: Run tests
         run: bin/rails test
