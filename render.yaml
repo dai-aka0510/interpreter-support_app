@@ -1,0 +1,22 @@
+databases:
+  - name: interpreter-support-db
+    databaseName: interpreter_support
+    user: interpreter_support
+    plan: free
+    region: singapore
+
+services:
+  - type: web
+    name: interpreter-support-app
+    env: ruby
+    region: singapore
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec rails server -b 0.0.0.0"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: interpreter-support-db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
