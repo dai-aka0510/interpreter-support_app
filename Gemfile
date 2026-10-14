@@ -53,8 +53,8 @@ group :development do
   gem "web-console"
 end
 
-  gem 'carrierwave'
-  gem 'fog-aws'
+  gem "carrierwave"
+  gem "fog-aws"
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
