@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "projects/index"
+  get "projects/new"
+  get "projects/show"
+  get "projects/create"
   get "home/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -13,4 +17,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root "home#index"
+  resources :projects, only: [:index, :new, :create, :show]
+
 end
