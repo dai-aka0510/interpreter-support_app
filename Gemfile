@@ -1,14 +1,11 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-<<<<<<< HEAD
+
 gem "rails", "~> 7.2.2", ">= 7.2.2.1"
 
 gem "json", "< 3.0"
-=======
-gem "rails", "7.2.2.1"
-gem "json", "~> 2.15"
->>>>>>> origin/main
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use postgresql as the database for Active Record
