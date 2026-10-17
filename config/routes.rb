@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
@@ -22,17 +21,13 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
-=======
   get "projects/index"
   get "projects/new"
   get "projects/create"
   # トップページ（まずはここをトップ画面にします）
->>>>>>> origin/main
   root "home#index"
 
   # Projectの基本機能（CRUD）
   resources :projects
 
-  # ヘルスチェック（Railsデフォルト）
-  get "up" => "rails/health#show", as: :rails_health_check
 end
