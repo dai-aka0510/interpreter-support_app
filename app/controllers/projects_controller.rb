@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-
   # ログインしているユーザーだけがアクセスできるようにする（Sorceryの機能など）
   before_action :require_login
 

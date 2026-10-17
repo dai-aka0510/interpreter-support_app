@@ -15,11 +15,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :projects, only: [:index, :new, :create]
+  resources :projects, only: [ :index, :new, :create ]
 
-  get 'login', to: 'sessions#new'
-  post 'login', to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy'
+  get "login", to: "sessions#new"
+  post "login", to: "sessions#create"
+  delete "logout", to: "sessions#destroy"
 
   get "projects/index"
   get "projects/new"
@@ -29,5 +29,4 @@ Rails.application.routes.draw do
 
   # Projectの基本機能（CRUD）
   resources :projects
-
 end
