@@ -1,33 +1,54 @@
-<div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">案件一覧</h1>
-    <%= link_to "＋ 新規案件登録", new_project_path, class: "bg-indigo-600 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200" %>
+<div class="max-w-6xl mx-auto space-y-6">
+
+  <!-- ヘッダーエリア -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">案件一覧</h1>
+      <p class="text-sm text-slate-500 mt-1">登録されている案件情報と状況の一覧です。</p>
+    </div>
+
+    <%= link_to new_project_path, class: "inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg shadow-sm transition" do %>
+      <span>＋ 新しいアイテムを追加</span>
+    <% end %>
   </div>
 
-  <% if @projects.any? %>
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">実施日</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">案件名</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">クライアント名</th>
-            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">金額</th>
+  <!-- テーブルエリア -->
+  <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+    <% if @projects.any? %>
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <th class="py-3.5 px-4">クライアント</th>
+            <th class="py-3.5 px-4">案件名</th>
+            <th class="py-3.5 px-4">金額</th>
+            <th class="py-3.5 px-4">通訳実施日</th>
+            <th class="py-3.5 px-4 text-center">ステータス</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
           <% @projects.each do |project| %>
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= project.event_date %></td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= project.title %></td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= project.client_name %></td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-semibold text-gray-900">¥<%= number_with_delimiter(project.amount) %></td>
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-4 px-4 font-medium text-slate-900"><%= project.client_name %></td>
+              <td class="py-4 px-4"><%= project.title %></td>
+              <td class="py-4 px-4 font-medium text-slate-900"><%= number_to_currency(project.amount, unit: "￥", precision: 0) rescue project.amount %></td>
+              <td class="py-4 px-4 text-slate-500"><%= project.event_date %></td>
+              <td class="py-4 px-4 text-center">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  進行中
+                </span>
+              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
-    </div>
-  <% else %>
-    <p class="text-gray-500 text-center py-8">登録された案件はまだありません。「新規案件登録」から追加してみましょう！</p>
-  <% end %>
+    <% else %>
+      <!-- データが1件もない時 -->
+      <div class="p-12 text-center">
+        <div class="text-slate-400 mb-3 text-lg">📁</div>
+        <p class="text-slate-600 font-medium">登録された案件はまだありません。</p>
+        <p class="text-xs text-slate-400 mt-1 mb-4">右上のボタンから案件を追加してみましょう！</p>
+      </div>
+    <% end %>
+  </div>
+
 </div>
