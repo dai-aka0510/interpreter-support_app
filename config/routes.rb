@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  root "home#index"
 
-  resource :dashboard, only: [:show]
-  resources :projects, only: [:index, :new, :create]
+  resource :dashboard, only: [ :show ]
+  resources :projects, only: [ :index, :new, :create ]
 
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
