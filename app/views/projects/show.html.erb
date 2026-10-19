@@ -1,2 +1,52 @@
-<h1>Projects#show</h1>
-<p>Find me in app/views/projects/show.html.erb</p>
+<div class="max-w-4xl mx-auto space-y-6">
+
+  <!-- ページヘッダー＆戻るボタン -->
+  <div class="flex items-center justify-between">
+    <%= link_to projects_path, data: { turbo: false }, class: "inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold transition text-base" do %>
+      <span>←</span>
+      <span>案件一覧に戻る</span>
+    <% end %>
+
+    <!-- 編集・削除ボタンエリア -->
+    <div class="flex items-center gap-3">
+      <%= link_to edit_project_path(@project), data: { turbo: false }, class: "px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm rounded-xl shadow-sm transition active:scale-95" do %>
+        ✏️ 編集する
+      <% end %>
+
+      <%= button_to project_path(@project), method: :delete, data: { turbo_confirm: "本当にこの案件を削除しますか？" }, class: "px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm rounded-xl shadow-sm transition active:scale-95 cursor-pointer" do %>
+        🗑️ 削除する
+      <% end %>
+    </div>
+  </div>
+
+  <!-- 案件詳細カード -->
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-8">
+    <div class="border-b border-slate-200 pb-6">
+      <div class="text-sm font-semibold text-blue-600 mb-1">通訳案件の詳細</div>
+      <h1 class="text-3xl font-extrabold text-slate-900"><%= @project.title %></h1>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- クライアント名 -->
+      <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-1">
+        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">クライアント名</div>
+        <div class="text-xl font-bold text-slate-900"><%= @project.client_name %></div>
+      </div>
+
+      <!-- 通訳実施日 -->
+      <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-1">
+        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">通訳実施日</div>
+        <div class="text-xl font-bold text-slate-900">📅 <%= @project.event_date %></div>
+      </div>
+
+      <!-- 報酬金額 -->
+      <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-1 md:col-span-2">
+        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">報酬金額</div>
+        <div class="text-3xl font-extrabold text-slate-900">
+          <%= number_to_currency(@project.amount, unit: "￥", precision: 0) rescue "￥#{@project.amount}" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
