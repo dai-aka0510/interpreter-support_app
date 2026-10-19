@@ -7,7 +7,7 @@
       <p class="text-sm text-slate-600 mt-1">受託した案件や今後の通訳スケジュールを確認・管理できます。</p>
     </div>
 
-    <%= link_to new_project_path, class: "inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-base rounded-xl shadow-md transition active:scale-95" do %>
+    <%= link_to new_project_path, data: { turbo: false }, class: "inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-base rounded-xl shadow-md transition active:scale-95" do %>
       <span class="text-xl">＋</span>
       <span>新しい案件を登録する</span>
     <% end %>
@@ -24,6 +24,7 @@
               <th class="py-4 px-6">クライアント名</th>
               <th class="py-4 px-6">案件名</th>
               <th class="py-4 px-6 text-right">報酬金額</th>
+              <th class="py-4 px-6 text-center">操作</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200 text-base text-slate-800">
@@ -36,10 +37,15 @@
                   <%= project.client_name %>
                 </td>
                 <td class="py-5 px-6 font-medium text-slate-800">
-                  <%= project.title %>
+                  <%= link_to project.title, project_path(project), data: { turbo: false }, class: "text-blue-600 hover:underline font-bold" %>
                 </td>
                 <td class="py-5 px-6 text-right font-bold text-lg text-slate-900">
                   <%= number_to_currency(project.amount, unit: "￥", precision: 0) rescue "￥#{project.amount}" %>
+                </td>
+                <td class="py-5 px-6 text-center">
+                  <%= link_to project_path(project), data: { turbo: false }, class: "px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-lg transition" do %>
+                    詳細を見る
+                  <% end %>
                 </td>
               </tr>
             <% end %>
@@ -47,7 +53,7 @@
         </table>
       </div>
     <% else %>
-      <!-- データがまだない時の親切な案内 -->
+      <!-- データがまだない時の案内 -->
       <div class="p-12 text-center space-y-4">
         <div class="text-5xl">📄</div>
         <div class="text-lg font-bold text-slate-700">登録されている通訳案件はまだありません</div>
