@@ -1,21 +1,19 @@
 class ProjectsController < ApplicationController
-  # ログインしているユーザーだけがアクセスできるようにする（Sorceryの機能など）
   before_action :require_login
 
   def index
-    @projects = current_user.projects.order(event_date: :desc)
+    @projects = current_user.projects
   end
 
   def new
-    @project = current_user.projects.new
+    @project = current_user.projects.build
   end
 
   def create
-    @project = current_user.projects.new(project_params)
+    @project = current_user.projects.build(project_params)
     if @project.save
       redirect_to projects_path, notice: "案件を登録しました！"
     else
-      flash.now[:alert] = "登録に失敗しました"
       render :new, status: :unprocessable_entity
     end
   end
@@ -23,6 +21,6 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :client_name, :amount, :event_date)
+    params.require(:project).permit(:title, :client_name, :event_date, :amount)
   end
 end

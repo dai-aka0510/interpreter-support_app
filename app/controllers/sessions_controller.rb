@@ -4,9 +4,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = login(params[:email], params[:password])
-    if user
-      redirect_to projects_path, notice: "ログインしました！"
+    @user = login(params[:email], params[:password])
+
+    if @user
+      redirect_to dashboard_path, notice: "ログインしました！"
     else
       flash.now[:alert] = "ログインに失敗しました"
       render :new, status: :unprocessable_entity
