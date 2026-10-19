@@ -8,7 +8,7 @@
       "RSpec"
     ],
     "project_name": "Rails",
-    "timestamp": "2026-10-16T04:57:32.643+00:00",
+    "timestamp": "2026-10-17T12:09:09.302+00:00",
     "root": "/rails",
     "commit": null,
     "primary_coverage": "line",
@@ -19,9 +19,9 @@
   "total": {
     "lines": {
       "covered": 0,
-      "missed": 44,
-      "omitted": 91,
-      "total": 44,
+      "missed": 58,
+      "omitted": 100,
+      "total": 58,
       "percent": 0.0,
       "strength": 0.0
     }
@@ -84,6 +84,25 @@
       "omitted_lines": 2,
       "total_lines": 2
     },
+    "app/controllers/dashboards_controller.rb": {
+      "source": [
+        "class DashboardsController < ApplicationController",
+        "  def show",
+        "  end",
+        "end"
+      ],
+      "lines": [
+        0,
+        0,
+        null,
+        null
+      ],
+      "lines_covered_percent": 0.0,
+      "covered_lines": 0,
+      "missed_lines": 2,
+      "omitted_lines": 2,
+      "total_lines": 2
+    },
     "app/controllers/home_controller.rb": {
       "source": [
         "class HomeController < ApplicationController",
@@ -106,6 +125,7 @@
     "app/controllers/projects_controller.rb": {
       "source": [
         "class ProjectsController < ApplicationController",
+        "  # ログインしているユーザーだけがアクセスできるようにする（Sorceryの機能など）",
         "  before_action :require_login",
         "",
         "  def index",
@@ -119,9 +139,9 @@
         "  def create",
         "    @project = current_user.projects.new(project_params)",
         "    if @project.save",
-        "      redirect_to projects_path, notice: '案件を登録しました！'",
+        "      redirect_to projects_path, notice: \"案件を登録しました！\"",
         "    else",
-        "      flash.now[:alert] = '登録に失敗しました'",
+        "      flash.now[:alert] = \"登録に失敗しました\"",
         "      render :new, status: :unprocessable_entity",
         "    end",
         "  end",
@@ -135,6 +155,7 @@
       ],
       "lines": [
         0,
+        null,
         0,
         null,
         0,
@@ -165,19 +186,29 @@
       "lines_covered_percent": 0.0,
       "covered_lines": 0,
       "missed_lines": 15,
-      "omitted_lines": 12,
+      "omitted_lines": 13,
       "total_lines": 15
     },
     "app/controllers/sessions_controller.rb": {
       "source": [
         "class SessionsController < ApplicationController",
         "  def new",
+        "    # ログイン画面を表示するだけ",
         "  end",
         "",
         "  def create",
+        "    user = login(params[:email], params[:password])",
+        "    if user",
+        "      redirect_to projects_path, notice: \"ログインしました！\"",
+        "    else",
+        "      flash.now[:alert] = \"ログインに失敗しました\"",
+        "      render :new, status: :unprocessable_entity",
+        "    end",
         "  end",
         "",
         "  def destroy",
+        "    logout",
+        "    redirect_to root_path, notice: \"ログアウトしました！\"",
         "  end",
         "end"
       ],
@@ -186,18 +217,28 @@
         0,
         null,
         null,
+        null,
+        0,
+        0,
+        0,
+        0,
+        null,
+        0,
         0,
         null,
         null,
+        null,
+        0,
+        0,
         0,
         null,
         null
       ],
       "lines_covered_percent": 0.0,
       "covered_lines": 0,
-      "missed_lines": 4,
-      "omitted_lines": 6,
-      "total_lines": 4
+      "missed_lines": 11,
+      "omitted_lines": 9,
+      "total_lines": 11
     },
     "app/helpers/application_helper.rb": {
       "source": [
@@ -214,9 +255,39 @@
       "omitted_lines": 1,
       "total_lines": 1
     },
+    "app/helpers/dashboards_helper.rb": {
+      "source": [
+        "module DashboardsHelper",
+        "end"
+      ],
+      "lines": [
+        0,
+        null
+      ],
+      "lines_covered_percent": 0.0,
+      "covered_lines": 0,
+      "missed_lines": 1,
+      "omitted_lines": 1,
+      "total_lines": 1
+    },
     "app/helpers/home_helper.rb": {
       "source": [
         "module HomeHelper",
+        "end"
+      ],
+      "lines": [
+        0,
+        null
+      ],
+      "lines_covered_percent": 0.0,
+      "covered_lines": 0,
+      "missed_lines": 1,
+      "omitted_lines": 1,
+      "total_lines": 1
+    },
+    "app/helpers/projects_helper.rb": {
+      "source": [
+        "module ProjectsHelper",
         "end"
       ],
       "lines": [
@@ -305,10 +376,10 @@
       "omitted_lines": 1,
       "total_lines": 2
     },
-    "app/models/user.rb": {
+    "app/models/project.rb": {
       "source": [
-        "class User < ApplicationRecord",
-        "  authenticates_with_sorcery!",
+        "class Project < ApplicationRecord",
+        "  belongs_to :user",
         "end"
       ],
       "lines": [
@@ -321,6 +392,25 @@
       "missed_lines": 2,
       "omitted_lines": 1,
       "total_lines": 2
+    },
+    "app/models/user.rb": {
+      "source": [
+        "class User < ApplicationRecord",
+        "  authenticates_with_sorcery!",
+        "  has_many :projects, dependent: :destroy",
+        "end"
+      ],
+      "lines": [
+        0,
+        0,
+        0,
+        null
+      ],
+      "lines_covered_percent": 0.0,
+      "covered_lines": 0,
+      "missed_lines": 3,
+      "omitted_lines": 1,
+      "total_lines": 3
     },
     "app/uploaders/image_uploader.rb": {
       "source": [
@@ -470,14 +560,15 @@
     "Controllers": {
       "lines": {
         "covered": 0,
-        "missed": 23,
-        "omitted": 22,
-        "total": 23,
+        "missed": 32,
+        "omitted": 28,
+        "total": 32,
         "percent": 0.0,
         "strength": 0.0
       },
       "files": [
         "app/controllers/application_controller.rb",
+        "app/controllers/dashboards_controller.rb",
         "app/controllers/home_controller.rb",
         "app/controllers/projects_controller.rb",
         "app/controllers/sessions_controller.rb"
@@ -486,15 +577,17 @@
     "Helpers": {
       "lines": {
         "covered": 0,
-        "missed": 3,
-        "omitted": 3,
-        "total": 3,
+        "missed": 5,
+        "omitted": 5,
+        "total": 5,
         "percent": 0.0,
         "strength": 0.0
       },
       "files": [
         "app/helpers/application_helper.rb",
+        "app/helpers/dashboards_helper.rb",
         "app/helpers/home_helper.rb",
+        "app/helpers/projects_helper.rb",
         "app/helpers/sessions_helper.rb"
       ]
     },
@@ -527,14 +620,15 @@
     "Models": {
       "lines": {
         "covered": 0,
-        "missed": 4,
-        "omitted": 2,
-        "total": 4,
+        "missed": 7,
+        "omitted": 3,
+        "total": 7,
         "percent": 0.0,
         "strength": 0.0
       },
       "files": [
         "app/models/application_record.rb",
+        "app/models/project.rb",
         "app/models/user.rb"
       ]
     },
@@ -685,6 +779,93 @@
           "line": 0.0
         },
         "app/models/application_record.rb": {
+          "line": 0.0
+        },
+        "app/models/user.rb": {
+          "line": 0.0
+        },
+        "app/uploaders/image_uploader.rb": {
+          "line": 0.0
+        }
+      }
+    },
+    {
+      "created_at": "2026-10-17T12:09:09Z",
+      "branch": null,
+      "commit": null,
+      "totals": {
+        "line": 0.0
+      },
+      "groups": {
+        "Channels": {
+          "line": 0.0
+        },
+        "Controllers": {
+          "line": 0.0
+        },
+        "Helpers": {
+          "line": 0.0
+        },
+        "Jobs": {
+          "line": 0.0
+        },
+        "Mailers": {
+          "line": 0.0
+        },
+        "Models": {
+          "line": 0.0
+        },
+        "Ungrouped": {
+          "line": 0.0
+        }
+      },
+      "files": {
+        "app/channels/application_cable/channel.rb": {
+          "line": 0.0
+        },
+        "app/channels/application_cable/connection.rb": {
+          "line": 0.0
+        },
+        "app/controllers/application_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/dashboards_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/home_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/projects_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/sessions_controller.rb": {
+          "line": 0.0
+        },
+        "app/helpers/application_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/dashboards_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/home_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/projects_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/sessions_helper.rb": {
+          "line": 0.0
+        },
+        "app/jobs/application_job.rb": {
+          "line": 0.0
+        },
+        "app/mailers/application_mailer.rb": {
+          "line": 0.0
+        },
+        "app/models/application_record.rb": {
+          "line": 0.0
+        },
+        "app/models/project.rb": {
           "line": 0.0
         },
         "app/models/user.rb": {
