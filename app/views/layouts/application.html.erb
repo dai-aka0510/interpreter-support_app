@@ -13,68 +13,79 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex text-base">
+  <body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col">
 
-    <!-- 左側：視認性の高いサイドバー -->
-    <aside class="w-72 bg-white border-r border-slate-300 flex flex-col shrink-0 min-h-screen shadow-sm">
-      <!-- アプリロゴエリア -->
-      <div class="p-6 border-b border-slate-200 flex items-center gap-3">
-        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-white text-lg shadow-sm">
-          A
-        </div>
-        <div>
-          <div class="font-bold text-slate-900 text-xl tracking-wide">Atogatari</div>
-          <div class="text-xs text-slate-500 font-medium">通訳者向け案件管理</div>
-        </div>
+    <!-- 通知メッセージ -->
+    <% flash.each do |message_type, message| %>
+      <div class="p-4 m-4 rounded-xl border text-base font-bold shadow-sm <%= message_type == 'notice' ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : 'bg-rose-50 text-rose-800 border-rose-300' %>">
+        <%= message %>
       </div>
+    <% end %>
 
-      <!-- メインナビゲーション -->
-      <nav class="p-4 space-y-2 flex-1">
-        <%= link_to root_path, class: "flex items-center gap-3 px-4 py-3 text-base font-bold text-slate-700 rounded-xl hover:bg-slate-100 transition" do %>
-          <span class="text-xl">🏠</span>
-          <span>ホーム</span>
-        <% end %>
+    <% if current_page?(root_path) || current_page?(login_path) %>
+      <!-- トップページまたはログイン画面のときはサイドバーなし -->
+      <main class="flex-1 w-full min-h-screen flex flex-col">
+        <%= yield %>
+      </main>
+    <% else %>
+      <!-- ログイン後の画面（ダッシュボードや案件一覧等）のときはサイドバーを表示 -->
+      <div class="flex flex-1 min-h-screen">
+        <!-- 左側：サイドバー -->
+        <aside class="w-72 bg-white text-slate-800 border-r border-slate-300 flex flex-col shrink-0 min-h-screen shadow-sm">
+          <div class="p-6 border-b border-slate-200 flex items-center gap-3">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-white text-lg shadow-sm">
+              A
+            </div>
+            <div>
+              <div class="font-bold text-slate-900 text-xl tracking-wide">Atogatari</div>
+              <div class="text-xs text-slate-500 font-medium">通訳者向け案件管理</div>
+            </div>
+          </div>
 
-        <%= link_to projects_path, class: "flex items-center gap-3 px-4 py-3 text-base font-bold text-blue-700 bg-blue-50 border border-blue-200 rounded-xl shadow-sm transition" do %>
-          <span class="text-xl">📋</span>
-          <span>案件一覧</span>
-        <% end %>
-      </nav>
-
-      <!-- ログイン / アカウント情報エリア -->
-      <div class="p-4 border-t border-slate-200 bg-slate-50">
-        <% if logged_in? %>
-          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">ログイン中</div>
-          <div class="text-sm font-medium text-slate-700 truncate mb-3"><%= current_user.email %></div>
-          <%= button_to logout_path, method: :delete, class: "w-full py-2.5 px-4 bg-white border border-slate-300 text-rose-600 font-bold text-sm rounded-lg hover:bg-rose-50 hover:border-rose-200 transition text-center shadow-sm" do %>
-            ログアウト
-          <% end %>
-        <% else %>
-          <div class="space-y-2">
-            <%= link_to login_path, class: "block w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-lg transition text-center shadow-sm" do %>
-              ログイン
+          <nav class="p-4 space-y-2 flex-1">
+            <%= link_to root_path, data: { turbo: false }, class: "flex items-center gap-3 px-4 py-3 text-base font-bold text-slate-700 rounded-xl hover:bg-slate-100 transition" do %>
+              <span class="text-xl">🏠</span>
+              <span>ホーム</span>
             <% end %>
-            <% if respond_to?(:new_user_path) %>
-              <%= link_to "新規登録", new_user_path, class: "block w-full py-2.5 px-4 bg-white border border-slate-300 text-slate-700 font-bold text-sm rounded-lg hover:bg-slate-100 transition text-center shadow-sm" %>
+
+            <% if logged_in? %>
+              <%= link_to dashboard_path, data: { turbo: false }, class: "flex items-center gap-3 px-4 py-3 text-base font-bold text-blue-700 bg-blue-50 border border-blue-200 rounded-xl shadow-sm transition" do %>
+                <span class="text-xl">📊</span>
+                <span>ダッシュボード</span>
+              <% end %>
+
+              <%= link_to projects_path, data: { turbo: false }, class: "flex items-center gap-3 px-4 py-3 text-base font-bold text-slate-700 rounded-xl hover:bg-slate-100 transition" do %>
+                <span class="text-xl">📋</span>
+                <span>案件一覧</span>
+              <% end %>
+            <% end %>
+          </nav>
+
+          <div class="p-4 border-t border-slate-200 bg-slate-50">
+            <% if logged_in? %>
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">ログイン中</div>
+              <div class="text-sm font-medium text-slate-700 truncate mb-3"><%= current_user.email %></div>
+              <%= button_to logout_path, method: :delete, data: { turbo: false }, class: "w-full py-2.5 px-4 bg-white border border-slate-300 text-rose-600 font-bold text-sm rounded-lg hover:bg-rose-50 transition text-center shadow-sm cursor-pointer" do %>
+                ログアウト
+              <% end %>
+            <% else %>
+              <div class="space-y-2">
+                <%= link_to login_path, data: { turbo: false }, class: "block w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-lg transition text-center shadow-sm" do %>
+                  ログイン
+                <% end %>
+              </div>
             <% end %>
           </div>
-        <% end %>
-      </div>
-    </aside>
+        </aside>
 
-    <!-- 右側：メインコンテンツエリア -->
-    <main class="flex-1 flex flex-col min-w-0">
-      <!-- 通知メッセージ -->
-      <% flash.each do |message_type, message| %>
-        <div class="p-4 m-8 mb-0 rounded-xl border text-base font-bold shadow-sm <%= message_type == 'notice' ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : 'bg-rose-50 text-rose-800 border-rose-300' %>">
-          <%= message %>
-        </div>
-      <% end %>
-
-      <div class="p-8 max-w-7xl mx-auto w-full">
-        <%= yield %>
+        <!-- メインコンテンツ -->
+        <main class="flex-1 flex flex-col min-w-0 bg-slate-100 text-slate-800">
+          <div class="p-8 max-w-7xl mx-auto w-full">
+            <%= yield %>
+          </div>
+        </main>
       </div>
-    </main>
+    <% end %>
 
   </body>
 </html>

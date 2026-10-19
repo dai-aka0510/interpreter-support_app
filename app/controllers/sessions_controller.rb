@@ -1,7 +1,5 @@
 class SessionsController < ApplicationController
-  def new
-    # ログイン画面を表示するだけ
-  end
+  def new; end
 
   def create
     @user = login(params[:email], params[:password])
@@ -9,8 +7,8 @@ class SessionsController < ApplicationController
     if @user
       redirect_to dashboard_path, notice: "ログインしました！"
     else
-      flash.now[:alert] = "ログインに失敗しました"
-      render :new, status: :unprocessable_entity
+      # 失敗時は render ではなく root_path へリダイレクトしてすっきりさせる
+      redirect_to root_path, alert: "ログインに失敗しました。メールアドレスとパスワードをご確認ください。"
     end
   end
 
