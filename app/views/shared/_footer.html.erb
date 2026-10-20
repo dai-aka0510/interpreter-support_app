@@ -1,0 +1,24 @@
+<footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+      
+      <!-- ロゴ・サービス名 -->
+      <div class="text-sm font-bold text-slate-200">
+        <%= link_to 'Atogatari', root_path, class: 'hover:text-white transition' %>
+      </div>
+
+      <!-- 静的ページへのリンク -->
+      <div class="flex flex-wrap justify-center space-x-6 text-xs font-medium">
+        <%= link_to '利用規約', terms_path, class: 'hover:text-slate-200 transition' %>
+        <%= link_to 'プライバシーポリシー', privacy_path, class: 'hover:text-slate-200 transition' %>
+        <%= link_to 'お問い合わせ', contact_path, class: 'hover:text-slate-200 transition' %>
+      </div>
+
+      <!-- コピーライト -->
+      <div class="text-xs text-slate-500">
+        &copy; <%= Time.current.year %> Atogatari. All rights reserved.
+      </div>
+
+    </div>
+  </div>
+</footer>
