@@ -7,10 +7,10 @@
     "command_names": [
       "RSpec"
     ],
-    "project_name": "Interpreter-support app",
-    "timestamp": "2026-10-20T12:25:09.812+09:00",
-    "root": "/home/da15/workspace/interpreter-support_app",
-    "commit": "8d645f4d6b7c30573ce2f695c5a7749ba41133f9",
+    "project_name": "Rails",
+    "timestamp": "2026-10-22T11:35:23.180+00:00",
+    "root": "/rails",
+    "commit": null,
     "primary_coverage": "line",
     "line_coverage": true,
     "branch_coverage": false,
@@ -19,9 +19,9 @@
   "total": {
     "lines": {
       "covered": 0,
-      "missed": 84,
-      "omitted": 133,
-      "total": 84,
+      "missed": 104,
+      "omitted": 146,
+      "total": 104,
       "percent": 0.0,
       "strength": 0.0
     }
@@ -274,6 +274,21 @@
       "omitted_lines": 26,
       "total_lines": 26
     },
+    "app/controllers/receipts_controller.rb": {
+      "source": [
+        "class ReceiptsController < ApplicationController",
+        "end"
+      ],
+      "lines": [
+        0,
+        null
+      ],
+      "lines_covered_percent": 0.0,
+      "covered_lines": 0,
+      "missed_lines": 1,
+      "omitted_lines": 1,
+      "total_lines": 1
+    },
     "app/controllers/sessions_controller.rb": {
       "source": [
         "class SessionsController < ApplicationController",
@@ -357,10 +372,27 @@
     "app/controllers/users_controller.rb": {
       "source": [
         "class UsersController < ApplicationController",
+        "  skip_before_action :require_login, only: %i[new create], raise: false",
+        "",
         "  def new",
+        "    @user = User.new",
         "  end",
         "",
         "  def create",
+        "    @user = User.new(user_params)",
+        "    if @user.save",
+        "      auto_login(@user) # 登録後そのまま自動ログイン（Sorcery）",
+        "      redirect_to dashboard_path, notice: \"会員登録が完了しました！\"",
+        "    else",
+        "      flash.now[:danger] = \"会員登録に失敗しました\"",
+        "      render :new, status: :unprocessable_entity",
+        "    end",
+        "  end",
+        "",
+        "  private",
+        "",
+        "  def user_params",
+        "    params.require(:user).permit(:email, :password, :password_confirmation)",
         "  end",
         "end"
       ],
@@ -368,16 +400,33 @@
         0,
         0,
         null,
+        0,
+        0,
         null,
+        null,
+        0,
+        0,
+        0,
+        0,
+        0,
+        null,
+        0,
+        0,
+        null,
+        null,
+        null,
+        0,
+        null,
+        0,
         0,
         null,
         null
       ],
       "lines_covered_percent": 0.0,
       "covered_lines": 0,
-      "missed_lines": 3,
-      "omitted_lines": 4,
-      "total_lines": 3
+      "missed_lines": 14,
+      "omitted_lines": 10,
+      "total_lines": 14
     },
     "app/helpers/application_helper.rb": {
       "source": [
@@ -442,6 +491,21 @@
     "app/helpers/projects_helper.rb": {
       "source": [
         "module ProjectsHelper",
+        "end"
+      ],
+      "lines": [
+        0,
+        null
+      ],
+      "lines_covered_percent": 0.0,
+      "covered_lines": 0,
+      "missed_lines": 1,
+      "omitted_lines": 1,
+      "total_lines": 1
+    },
+    "app/helpers/receipts_helper.rb": {
+      "source": [
+        "module ReceiptsHelper",
         "end"
       ],
       "lines": [
@@ -564,6 +628,25 @@
       "source": [
         "class Project < ApplicationRecord",
         "  belongs_to :user",
+        "  has_many :receipts, dependent: :destroy",
+        "end"
+      ],
+      "lines": [
+        0,
+        0,
+        0,
+        null
+      ],
+      "lines_covered_percent": 0.0,
+      "covered_lines": 0,
+      "missed_lines": 3,
+      "omitted_lines": 1,
+      "total_lines": 3
+    },
+    "app/models/receipt.rb": {
+      "source": [
+        "class Receipt < ApplicationRecord",
+        "  belongs_to :project",
         "end"
       ],
       "lines": [
@@ -582,19 +665,35 @@
         "class User < ApplicationRecord",
         "  authenticates_with_sorcery!",
         "  has_many :projects, dependent: :destroy",
+        "",
+        "  # パスワードのバリデーション（新規登録時やパスワード変更時のみ検証）",
+        "  validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }",
+        "  validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }",
+        "  validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }",
+        "",
+        "  # メールアドレスのバリデーション",
+        "  validates :email, presence: true, uniqueness: true",
         "end"
       ],
       "lines": [
         0,
         0,
         0,
+        null,
+        null,
+        0,
+        0,
+        0,
+        null,
+        null,
+        0,
         null
       ],
       "lines_covered_percent": 0.0,
       "covered_lines": 0,
-      "missed_lines": 3,
-      "omitted_lines": 1,
-      "total_lines": 3
+      "missed_lines": 7,
+      "omitted_lines": 5,
+      "total_lines": 7
     },
     "app/uploaders/image_uploader.rb": {
       "source": [
@@ -744,9 +843,9 @@
     "Controllers": {
       "lines": {
         "covered": 0,
-        "missed": 55,
-        "omitted": 58,
-        "total": 55,
+        "missed": 67,
+        "omitted": 65,
+        "total": 67,
         "percent": 0.0,
         "strength": 0.0
       },
@@ -756,6 +855,7 @@
         "app/controllers/home_controller.rb",
         "app/controllers/pages_controller.rb",
         "app/controllers/projects_controller.rb",
+        "app/controllers/receipts_controller.rb",
         "app/controllers/sessions_controller.rb",
         "app/controllers/static_pages_controller.rb",
         "app/controllers/users_controller.rb"
@@ -764,9 +864,9 @@
     "Helpers": {
       "lines": {
         "covered": 0,
-        "missed": 8,
-        "omitted": 8,
-        "total": 8,
+        "missed": 9,
+        "omitted": 9,
+        "total": 9,
         "percent": 0.0,
         "strength": 0.0
       },
@@ -776,6 +876,7 @@
         "app/helpers/home_helper.rb",
         "app/helpers/pages_helper.rb",
         "app/helpers/projects_helper.rb",
+        "app/helpers/receipts_helper.rb",
         "app/helpers/sessions_helper.rb",
         "app/helpers/static_pages_helper.rb",
         "app/helpers/users_helper.rb"
@@ -810,15 +911,16 @@
     "Models": {
       "lines": {
         "covered": 0,
-        "missed": 7,
-        "omitted": 3,
-        "total": 7,
+        "missed": 14,
+        "omitted": 8,
+        "total": 14,
         "percent": 0.0,
         "strength": 0.0
       },
       "files": [
         "app/models/application_record.rb",
         "app/models/project.rb",
+        "app/models/receipt.rb",
         "app/models/user.rb"
       ]
     },
@@ -1260,6 +1362,228 @@
           "line": 0.0
         },
         "app/models/project.rb": {
+          "line": 0.0
+        },
+        "app/models/user.rb": {
+          "line": 0.0
+        },
+        "app/uploaders/image_uploader.rb": {
+          "line": 0.0
+        }
+      }
+    },
+    {
+      "created_at": "2026-10-22T06:42:51Z",
+      "branch": "feature/receipt-registration",
+      "commit": "032dc47413e49a63e96cd3ef0ebb99d756c65ba2",
+      "totals": {
+        "line": 0.0
+      },
+      "groups": {
+        "Channels": {
+          "line": 0.0
+        },
+        "Controllers": {
+          "line": 0.0
+        },
+        "Helpers": {
+          "line": 0.0
+        },
+        "Jobs": {
+          "line": 0.0
+        },
+        "Mailers": {
+          "line": 0.0
+        },
+        "Models": {
+          "line": 0.0
+        },
+        "Ungrouped": {
+          "line": 0.0
+        }
+      },
+      "files": {
+        "app/channels/application_cable/channel.rb": {
+          "line": 0.0
+        },
+        "app/channels/application_cable/connection.rb": {
+          "line": 0.0
+        },
+        "app/controllers/application_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/dashboards_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/home_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/pages_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/projects_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/sessions_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/static_pages_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/users_controller.rb": {
+          "line": 0.0
+        },
+        "app/helpers/application_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/dashboards_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/home_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/pages_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/projects_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/sessions_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/static_pages_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/users_helper.rb": {
+          "line": 0.0
+        },
+        "app/jobs/application_job.rb": {
+          "line": 0.0
+        },
+        "app/mailers/application_mailer.rb": {
+          "line": 0.0
+        },
+        "app/models/application_record.rb": {
+          "line": 0.0
+        },
+        "app/models/project.rb": {
+          "line": 0.0
+        },
+        "app/models/receipt.rb": {
+          "line": 0.0
+        },
+        "app/models/user.rb": {
+          "line": 0.0
+        },
+        "app/uploaders/image_uploader.rb": {
+          "line": 0.0
+        }
+      }
+    },
+    {
+      "created_at": "2026-10-22T11:35:23Z",
+      "branch": null,
+      "commit": null,
+      "totals": {
+        "line": 0.0
+      },
+      "groups": {
+        "Channels": {
+          "line": 0.0
+        },
+        "Controllers": {
+          "line": 0.0
+        },
+        "Helpers": {
+          "line": 0.0
+        },
+        "Jobs": {
+          "line": 0.0
+        },
+        "Mailers": {
+          "line": 0.0
+        },
+        "Models": {
+          "line": 0.0
+        },
+        "Ungrouped": {
+          "line": 0.0
+        }
+      },
+      "files": {
+        "app/channels/application_cable/channel.rb": {
+          "line": 0.0
+        },
+        "app/channels/application_cable/connection.rb": {
+          "line": 0.0
+        },
+        "app/controllers/application_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/dashboards_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/home_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/pages_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/projects_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/receipts_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/sessions_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/static_pages_controller.rb": {
+          "line": 0.0
+        },
+        "app/controllers/users_controller.rb": {
+          "line": 0.0
+        },
+        "app/helpers/application_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/dashboards_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/home_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/pages_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/projects_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/receipts_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/sessions_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/static_pages_helper.rb": {
+          "line": 0.0
+        },
+        "app/helpers/users_helper.rb": {
+          "line": 0.0
+        },
+        "app/jobs/application_job.rb": {
+          "line": 0.0
+        },
+        "app/mailers/application_mailer.rb": {
+          "line": 0.0
+        },
+        "app/models/application_record.rb": {
+          "line": 0.0
+        },
+        "app/models/project.rb": {
+          "line": 0.0
+        },
+        "app/models/receipt.rb": {
           "line": 0.0
         },
         "app/models/user.rb": {

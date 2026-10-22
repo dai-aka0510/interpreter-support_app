@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   root "home#index"
 
+  resources :users, only: [ :new, :create ]
+  resources :projects do
+    resources :receipts, only: [ :new, :create, :index, :destroy ]
+  end
+
   # 静的ページ
   get "terms", to: "pages#terms", as: :terms
   get "privacy", to: "pages#privacy", as: :privacy
