@@ -1,0 +1,55 @@
+<div class="max-w-2xl mx-auto space-y-6">
+
+  <!-- 戻るボタン -->
+  <div>
+    <%= link_to "← 案件詳細に戻る", project_path(@project), data: { turbo: false }, class: "inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold transition text-base" %>
+  </div>
+
+  <!-- フォームカード -->
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-6">
+    <div class="border-b border-slate-200 pb-4">
+      <div class="text-sm font-semibold text-blue-600 mb-1">案件名: <%= @project.title %></div>
+      <h1 class="text-2xl font-extrabold text-slate-900">領収証・経費の登録</h1>
+    </div>
+
+    <%= form_with model: [@project, @receipt], local: true, class: "space-y-6" do |f| %>
+
+      <!-- 品名・内容 -->
+      <div class="space-y-2">
+        <%= f.label :title, "品名・内容", class: "block text-sm font-bold text-slate-700" %>
+        <%= f.text_field :title, placeholder: "例: 会場費、通訳機材レンタル", class: "w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+      </div>
+
+      <!-- 金額 -->
+      <div class="space-y-2">
+        <%= f.label :amount, "金額 (円)", class: "block text-sm font-bold text-slate-700" %>
+        <%= f.number_field :amount, placeholder: "例: 5000", class: "w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+      </div>
+
+      <!-- 発行日 -->
+      <div class="space-y-2">
+        <%= f.label :issued_date, "発行日", class: "block text-sm font-bold text-slate-700" %>
+        <%= f.date_field :issued_date, class: "w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+      </div>
+
+      <!-- 勘定科目 -->
+      <div class="space-y-2">
+        <%= f.label :account_item, "勘定科目", class: "block text-sm font-bold text-slate-700" %>
+        <%= f.text_field :account_item, placeholder: "例: 消耗品費、旅費交通費", class: "w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+      </div>
+
+      <!-- メモ -->
+      <div class="space-y-2">
+        <%= f.label :memo, "メモ・備考", class: "block text-sm font-bold text-slate-700" %>
+        <%= f.text_area :memo, rows: 3, placeholder: "補足事項があれば入力してください", class: "w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+      </div>
+
+      <!-- 登録ボタン -->
+      <div>
+        <%= f.submit "登録する", class: "w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-sm transition active:scale-95 cursor-pointer" %>
+      </div>
+
+    <% end %>
+  </div>
+
+</div>

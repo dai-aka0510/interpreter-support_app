@@ -433,6 +433,228 @@
             "line": 0.0
           }
         }
+      },
+      {
+        "created_at": "2026-10-22T06:42:51Z",
+        "branch": "feature/receipt-registration",
+        "commit": "032dc47413e49a63e96cd3ef0ebb99d756c65ba2",
+        "totals": {
+          "line": 0.0
+        },
+        "groups": {
+          "Channels": {
+            "line": 0.0
+          },
+          "Controllers": {
+            "line": 0.0
+          },
+          "Helpers": {
+            "line": 0.0
+          },
+          "Jobs": {
+            "line": 0.0
+          },
+          "Mailers": {
+            "line": 0.0
+          },
+          "Models": {
+            "line": 0.0
+          },
+          "Ungrouped": {
+            "line": 0.0
+          }
+        },
+        "files": {
+          "app/channels/application_cable/channel.rb": {
+            "line": 0.0
+          },
+          "app/channels/application_cable/connection.rb": {
+            "line": 0.0
+          },
+          "app/controllers/application_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/dashboards_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/home_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/pages_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/projects_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/sessions_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/static_pages_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/users_controller.rb": {
+            "line": 0.0
+          },
+          "app/helpers/application_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/dashboards_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/home_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/pages_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/projects_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/sessions_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/static_pages_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/users_helper.rb": {
+            "line": 0.0
+          },
+          "app/jobs/application_job.rb": {
+            "line": 0.0
+          },
+          "app/mailers/application_mailer.rb": {
+            "line": 0.0
+          },
+          "app/models/application_record.rb": {
+            "line": 0.0
+          },
+          "app/models/project.rb": {
+            "line": 0.0
+          },
+          "app/models/receipt.rb": {
+            "line": 0.0
+          },
+          "app/models/user.rb": {
+            "line": 0.0
+          },
+          "app/uploaders/image_uploader.rb": {
+            "line": 0.0
+          }
+        }
+      },
+      {
+        "created_at": "2026-10-22T11:35:23Z",
+        "branch": null,
+        "commit": null,
+        "totals": {
+          "line": 0.0
+        },
+        "groups": {
+          "Channels": {
+            "line": 0.0
+          },
+          "Controllers": {
+            "line": 0.0
+          },
+          "Helpers": {
+            "line": 0.0
+          },
+          "Jobs": {
+            "line": 0.0
+          },
+          "Mailers": {
+            "line": 0.0
+          },
+          "Models": {
+            "line": 0.0
+          },
+          "Ungrouped": {
+            "line": 0.0
+          }
+        },
+        "files": {
+          "app/channels/application_cable/channel.rb": {
+            "line": 0.0
+          },
+          "app/channels/application_cable/connection.rb": {
+            "line": 0.0
+          },
+          "app/controllers/application_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/dashboards_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/home_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/pages_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/projects_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/receipts_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/sessions_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/static_pages_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/users_controller.rb": {
+            "line": 0.0
+          },
+          "app/helpers/application_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/dashboards_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/home_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/pages_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/projects_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/receipts_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/sessions_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/static_pages_helper.rb": {
+            "line": 0.0
+          },
+          "app/helpers/users_helper.rb": {
+            "line": 0.0
+          },
+          "app/jobs/application_job.rb": {
+            "line": 0.0
+          },
+          "app/mailers/application_mailer.rb": {
+            "line": 0.0
+          },
+          "app/models/application_record.rb": {
+            "line": 0.0
+          },
+          "app/models/project.rb": {
+            "line": 0.0
+          },
+          "app/models/receipt.rb": {
+            "line": 0.0
+          },
+          "app/models/user.rb": {
+            "line": 0.0
+          },
+          "app/uploaders/image_uploader.rb": {
+            "line": 0.0
+          }
+        }
       }
     ]
   }
