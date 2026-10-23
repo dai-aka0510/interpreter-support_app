@@ -73,14 +73,16 @@
                 <% end %>
               </div>
 
-              <!-- 金額と削除ボタンを並べるエリア -->
-              <div class="flex items-center gap-6">
+              <div class="flex items-center gap-4">
                 <div class="text-right">
                   <div class="text-lg font-extrabold text-slate-900">￥<%= number_with_delimiter(receipt.amount) %></div>
                 </div>
 
-                <!-- 削除ボタン -->
-                <%= button_to "削除", project_receipt_path(@project, receipt), method: :delete, data: { turbo_confirm: "本当にこの領収証を削除しますか？" }, class: "px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs rounded-lg transition cursor-pointer" %>
+                <div class="flex items-center gap-2">
+                  <%= link_to "編集", edit_project_receipt_path(@project, receipt), data: { turbo: false }, class: "px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-600 font-bold text-xs rounded-lg transition" %>
+
+                  <%= button_to "削除", project_receipt_path(@project, receipt), method: :delete, data: { turbo_confirm: "本当にこの領収証を削除しますか？" }, class: "px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs rounded-lg transition cursor-pointer" %>
+                </div>
               </div>
             </div>
           <% end %>

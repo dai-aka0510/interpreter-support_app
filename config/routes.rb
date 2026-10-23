@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [ :new, :create ]
   resources :projects do
-    resources :receipts, only: [ :new, :create, :index, :destroy ]
+    resources :receipts, only: [ :new, :create, :edit, :update, :destroy ]
   end
 
   # 静的ページ
