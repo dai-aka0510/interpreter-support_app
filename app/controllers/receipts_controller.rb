@@ -42,6 +42,6 @@ class ReceiptsController < ApplicationController
   end
 
   def receipt_params
-    params.require(:receipt).permit(:title, :amount, :issued_date, :account_item, :memo)
+    params.require(:receipt).permit(:title, :amount, :issued_date, :account_item, :memo, :image)
   end
 end

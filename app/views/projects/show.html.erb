@@ -71,6 +71,12 @@
                 <% if receipt.memo.present? %>
                   <div class="text-xs text-slate-600 bg-slate-100 p-2 rounded mt-1"><%= receipt.memo %></div>
                 <% end %>
+
+                <% if receipt.image.attached? %>
+                  <div class="mt-2">
+                    <%= image_tag receipt.image, class: "w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm" %>
+                  </div>
+                <% end %>
               </div>
 
               <div class="flex items-center gap-4">
@@ -94,4 +100,3 @@
   </div>
 
 </div>
-```<FollowUp>
