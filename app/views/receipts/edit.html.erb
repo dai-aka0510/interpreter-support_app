@@ -1,0 +1,73 @@
+<div class="max-w-2xl mx-auto space-y-6">
+
+  <!-- 戻るリンク -->
+  <div class="flex items-center justify-between">
+    <%= link_to project_path(@project), data: { turbo: false }, class: "inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold transition text-base" do %>
+      <span>←</span>
+      <span>案件詳細に戻る</span>
+    <% end %>
+  </div>
+
+  <!-- 編集フォームカード -->
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-6">
+    <div class="border-b border-slate-200 pb-4">
+      <h1 class="text-2xl font-extrabold text-slate-900">領収証の編集</h1>
+      <p class="text-sm text-slate-500 mt-1">登録内容を修正して更新してください</p>
+    </div>
+
+    <%= form_with(model: [@project, @receipt], local: true, class: "space-y-6") do |f| %>
+
+      <!-- エラーメッセージ表示（バリデーション用） -->
+      <% if @receipt.errors.any? %>
+        <div class="bg-rose-50 border border-rose-200 text-rose-700 p-4 rounded-xl space-y-1">
+          <div class="font-bold text-sm"><%= @receipt.errors.count %>件のエラーがあります</div>
+          <ul class="list-disc list-inside text-xs space-y-1">
+            <% @receipt.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <!-- タイトル -->
+      <div class="space-y-2">
+        <%= f.label :title, "領収証のタイトル（用途など）", class: "block text-sm font-bold text-slate-700" %>
+        <%= f.text_field :title, placeholder: "例：タクシー代、会場費など", class: "w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" %>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 金額 -->
+        <div class="space-y-2">
+          <%= f.label :amount, "金額 (円)", class: "block text-sm font-bold text-slate-700" %>
+          <%= f.number_field :amount, placeholder: "例：5000", class: "w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" %>
+        </div>
+
+        <!-- 発行日 -->
+        <div class="space-y-2">
+          <%= f.label :issued_date, "発行日", class: "block text-sm font-bold text-slate-700" %>
+          <%= f.date_field :issued_date, class: "w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" %>
+        </div>
+      </div>
+
+      <!-- 勘定科目 -->
+      <div class="space-y-2">
+        <%= f.label :account_item, "勘定科目", class: "block text-sm font-bold text-slate-700" %>
+        <%= f.text_field :account_item, placeholder: "例：旅費交通費、消耗品費など", class: "w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" %>
+      </div>
+
+      <!-- メモ -->
+      <div class="space-y-2">
+        <%= f.label :memo, "メモ（任意）", class: "block text-sm font-bold text-slate-700" %>
+        <%= f.text_area :memo, rows: 3, placeholder: "詳細な備考があれば入力してください", class: "w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" %>
+      </div>
+
+      <!-- 送信ボタン -->
+      <div class="flex items-center justify-end gap-4 pt-4 border-t border-slate-200">
+        <%= link_to "キャンセル", project_path(@project), data: { turbo: false }, class: "px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition" %>
+        <%= f.submit "更新する", class: "px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-sm transition cursor-pointer active:scale-95" %>
+      </div>
+
+    <% end %>
+  </div>
+
+</div>
