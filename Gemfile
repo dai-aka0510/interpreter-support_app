@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gem "rails", "~> 7.2.2", ">= 7.2.2.1"
 
-gem "json", "< 3.0"
+gem "json", "< 4.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
