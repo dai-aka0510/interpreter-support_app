@@ -4,6 +4,10 @@ RSpec.describe "StaticPages", type: :request do
   describe "GET /terms" do
     it "returns http success" do
       get "/static_pages/terms"
+      # 👇ここにレスポンスの中身を出力するコードを追加
+      puts "=== RESPONSE BODY START ==="
+      puts response.body
+      puts "=== RESPONSE BODY END ==="
       expect(response).to have_http_status(:success)
     end
   end
