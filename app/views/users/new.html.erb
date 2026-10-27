@@ -1,8 +1,21 @@
-<div class="max-w-md mx-auto my-12 px-4">
-  <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-    <div class="text-center space-y-1">
-      <h1 class="text-2xl font-extrabold text-slate-900">新規会員登録</h1>
-      <p class="text-xs text-slate-500">SoloBuddyアカウントを作成して始める</p>
+<div class="relative min-h-screen w-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <!-- 背景画像と暗いオーバーレイ（元の画像のまま） -->
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1964&auto=format&fit=crop" alt="Background" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"></div>
+  </div>
+
+  <!-- カード本体 -->
+  <div class="relative z-10 max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-slate-100 space-y-6 my-auto">
+    <!-- ロゴ・タイトル -->
+    <div class="text-center space-y-2">
+      <div class="w-10 h-10 bg-blue-600 rounded-xl mx-auto flex items-center justify-center font-bold text-white text-lg shadow-sm">
+        A
+      </div>
+      <div>
+        <h1 class="text-2xl font-extrabold text-slate-900">新規会員登録</h1>
+        <p class="text-xs text-slate-500 mt-1">SoloBuddyアカウントを作成して始める</p>
+      </div>
     </div>
 
     <%= form_with model: @user, url: users_path, local: true, class: "space-y-4" do |f| %>
@@ -18,25 +31,31 @@
 
       <div>
         <%= f.label :email, "メールアドレス", class: "block text-xs font-bold text-slate-700 mb-1" %>
-        <%= f.email_field :email, class: "w-full px-3 py-2 border border-slate-300 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500", placeholder: "example@email.com", required: true %>
+        <%= f.email_field :email, class: "w-full px-3 py-2.5 border border-slate-300 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500", placeholder: "example@email.com", required: true %>
       </div>
 
       <div>
         <%= f.label :password, "パスワード", class: "block text-xs font-bold text-slate-700 mb-1" %>
-        <%= f.password_field :password, class: "w-full px-3 py-2 border border-slate-300 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500", required: true %>
+        <%= f.password_field :password, class: "w-full px-3 py-2.5 border border-slate-300 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500", required: true %>
       </div>
 
       <div>
         <%= f.label :password_confirmation, "パスワード（確認）", class: "block text-xs font-bold text-slate-700 mb-1" %>
-        <%= f.password_field :password_confirmation, class: "w-full px-3 py-2 border border-slate-300 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500", required: true %>
+        <%= f.password_field :password_confirmation, class: "w-full px-3 py-2.5 border border-slate-300 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500", required: true %>
       </div>
 
       <%= f.submit "登録する", class: "w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-sm transition cursor-pointer" %>
     <% end %>
 
-    <div class="text-center pt-4 border-t border-slate-100 text-xs text-slate-500">
-      すでにアカウントをお持ちですか？
-      <%= link_to "ログイン", login_path, class: "text-blue-600 font-bold hover:underline" %>
+    <!-- フッターリンク -->
+    <div class="text-center pt-4 border-t border-slate-100 space-y-3 text-xs">
+      <div class="text-slate-500">
+        すでにアカウントをお持ちですか？
+        <%= link_to "ログイン", login_path, class: "text-blue-600 font-bold hover:underline" %>
+      </div>
+      <div>
+        <%= link_to "← トップページに戻る", root_path, class: "text-slate-500 hover:text-slate-800 transition" %>
+      </div>
     </div>
   </div>
 </div>
