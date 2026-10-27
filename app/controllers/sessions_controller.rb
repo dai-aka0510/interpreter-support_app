@@ -7,8 +7,8 @@ class SessionsController < ApplicationController
     if @user
       redirect_to dashboard_path, notice: "ログインしました！"
     else
-      # 失敗時は render ではなく root_path へリダイレクトしてすっきりさせる
-      redirect_to root_path, alert: "ログインに失敗しました。メールアドレスとパスワードをご確認ください。"
+      flash.now[:alert] = "ログインに失敗しました。メールアドレスとパスワードをご確認ください。"
+      render :new, status: :unprocessable_entity
     end
   end
 
