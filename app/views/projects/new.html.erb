@@ -2,6 +2,17 @@
   <h1 class="text-2xl font-bold mb-6 text-gray-800 text-center">新規案件登録</h1>
 
   <%= form_with model: @project, local: true, class: "space-y-4" do |f| %>
+    <% if @project.errors.any? %>
+      <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-md text-red-700 text-sm">
+        <p class="font-bold mb-1"><%= @project.errors.count %>件のエラーがあります：</p>
+        <ul class="list-disc list-inside space-y-1">
+          <% @project.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <div>
       <%= f.label :title, "案件名", class: "block text-sm font-medium text-gray-700" %>
       <%= f.text_field :title, placeholder: "例：〇〇会議 同時通訳", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" %>
@@ -14,7 +25,7 @@
 
     <div>
       <%= f.label :amount, "金額（円）", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.number_field :amount, placeholder: "例：50000", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" %>
+      <%= f.number_field :amount, placeholder: "例：50000", class: "mt-1 box-border block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" %>
     </div>
 
     <div>
