@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    models:
+      project: "案件"
+    attributes:
+      project:
+        title: "案件名"
+        client_name: "クライアント名"
+        amount: "金額"
+        event_date: "通訳実施日"
+    errors:
+      messages:
+        blank: "を入力してください"
