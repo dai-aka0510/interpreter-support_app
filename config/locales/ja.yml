@@ -2,12 +2,20 @@ ja:
   activerecord:
     models:
       project: "案件"
+      user: "ユーザー"
     attributes:
       project:
         title: "案件名"
         client_name: "クライアント名"
         amount: "金額"
         event_date: "通訳実施日"
+      user:
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
     errors:
       messages:
         blank: "を入力してください"
+        too_short: "は%{count}文字以上で入力してください"
+        taken: "はすでに存在します"
+        confirmation: "が内容と一致しません"
